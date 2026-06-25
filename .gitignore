@@ -1,0 +1,15 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.log
+
+# binaries (IMPORTANT)
+*.exe
+
+# variables
+*.tfvars
+
+# Windows
+Thumbs.db
