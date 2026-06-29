@@ -12,9 +12,9 @@ resource "aws_security_group" "db" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
     security_groups = var.allowed_security_groups
   }
 
@@ -48,9 +48,9 @@ resource "aws_db_instance" "this" {
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [aws_security_group.db.id]
 
-  multi_az               = true
-  publicly_accessible    = false
-  skip_final_snapshot    = true
+  multi_az            = true
+  publicly_accessible = false
+  skip_final_snapshot = true
 
   backup_retention_period = 7
 
