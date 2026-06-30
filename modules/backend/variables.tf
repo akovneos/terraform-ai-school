@@ -4,7 +4,7 @@ variable "project_name" {
 
 variable "lambda_runtime" {
   type    = string
-  default = "python3.12"
+  default = "nodejs20.x"
 }
 
 variable "lambda_handler" {

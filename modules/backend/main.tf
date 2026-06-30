@@ -15,6 +15,10 @@ resource "aws_iam_role" "lambda_role" {
       Action = "sts:AssumeRole"
     }]
   })
+
+  tags = {
+    Project = var.project_name
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
@@ -23,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
 }
 
 # =========================
-# ZIP (auto build from index.js)
+# ZIP PACKAGE
 # =========================
 
 data "archive_file" "lambda_zip" {
@@ -40,14 +44,41 @@ resource "aws_lambda_function" "api" {
   function_name = "${var.project_name}-api"
   role          = aws_iam_role.lambda_role.arn
 
-  runtime = "nodejs20.x"
-  handler = "index.handler"
+  runtime = var.lambda_runtime
+  handler = var.lambda_handler
 
   filename         = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 
   timeout     = var.lambda_timeout
   memory_size = var.lambda_memory_size
+
+  architectures = ["arm64"]
+
+  description = "AI School Backend API"
+
+  environment {
+    variables = {
+      PROJECT = var.project_name
+    }
+  }
+
+  tags = {
+    Project = var.project_name
+  }
+}
+
+# =========================
+# CLOUDWATCH LOG GROUP
+# =========================
+
+resource "aws_cloudwatch_log_group" "lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.api.function_name}"
+  retention_in_days = 30
+
+  tags = {
+    Project = var.project_name
+  }
 }
 
 # =========================
@@ -56,6 +87,10 @@ resource "aws_lambda_function" "api" {
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "${var.project_name}-http-api"
   protocol_type = "HTTP"
+
+  tags = {
+    Project = var.project_name
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
@@ -76,6 +111,10 @@ resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.http_api.id
   name        = "$default"
   auto_deploy = true
+
+  tags = {
+    Project = var.project_name
+  }
 }
 
 # =========================
