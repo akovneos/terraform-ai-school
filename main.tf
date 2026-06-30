@@ -57,7 +57,7 @@ module "backend" {
   lambda_timeout     = 10
   lambda_memory_size = 128
 
-  # если позже захочешь доступ к DB:
+  # DBアクセス必要になれば:
   # vpc_id = module.network.vpc_id
   # db_endpoint = module.database.db_endpoint
 }
