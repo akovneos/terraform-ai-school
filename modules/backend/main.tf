@@ -53,7 +53,6 @@ resource "aws_lambda_function" "api" {
 # =========================
 # API GATEWAY (HTTP API)
 # =========================
-
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "${var.project_name}-http-api"
   protocol_type = "HTTP"
@@ -82,7 +81,6 @@ resource "aws_apigatewayv2_stage" "default" {
 # =========================
 # LAMBDA PERMISSION
 # =========================
-
 resource "aws_lambda_permission" "apigw" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
