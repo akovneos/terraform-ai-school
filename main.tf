@@ -61,3 +61,35 @@ module "backend" {
   # vpc_id = module.network.vpc_id
   # db_endpoint = module.database.db_endpoint
 }
+
+############################################
+# FRONTEND MODULE 
+############################################
+
+module "frontend" {
+  source = "./modules/frontend"
+
+  project_name    = var.project_name
+  domain_name     = var.domain_name
+  route53_zone_id = var.route53_zone_id
+}
+############################################
+# AUTH MODULE (Cognito)
+############################################
+module "auth" {
+
+  source = "./modules/auth"
+
+  project_name = var.project_name
+
+  cognito_domain_prefix = "${var.project_name}-auth"
+
+  callback_urls = [
+    "http://localhost:3000"
+  ]
+
+  logout_urls = [
+    "http://localhost:3000"
+  ]
+
+}
