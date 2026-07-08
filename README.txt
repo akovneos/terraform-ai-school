@@ -197,7 +197,7 @@ output "cognito_domain" {
 
 }
 ############################################
-# AUTH MODULE (outputs.tf
+# AUTH MODULE variables.tf
 ############################################
 variable "project_name" {
   description = "Project name"
