@@ -27,17 +27,69 @@ module "network" {
 ############################################
 # DATABASE MODULE (RDS PostgreSQL)
 ############################################
+
 module "database" {
   source = "./modules/database"
 
-  project_name = "ai-school"
+  project_name = var.project_name
 
-  vpc_id              = module.network.vpc_id
-  private_subnet_ids  = module.network.private_subnet_ids
+  vpc_id             = module.network.vpc_id
+  private_subnet_ids = module.network.private_subnet_ids
 
   db_name     = var.db_name
   db_username = var.db_username
   db_password = var.db_password
 
-  allowed_security_groups = [] # или placeholder пока
+  allowed_security_groups = []
+}
+
+############################################
+# BACKEND MODULE (Lambda + API Gateway)
+############################################
+
+module "backend" {
+  source = "./modules/backend"
+
+  project_name = var.project_name
+
+  lambda_runtime     = "nodejs20.x"
+  lambda_handler     = "index.handler"
+  lambda_timeout     = 10
+  lambda_memory_size = 128
+
+  # DBアクセス必要になれば:
+  # vpc_id = module.network.vpc_id
+  # db_endpoint = module.database.db_endpoint
+}
+
+############################################
+# FRONTEND MODULE 
+############################################
+
+module "frontend" {
+  source = "./modules/frontend"
+
+  project_name    = var.project_name
+  domain_name     = var.domain_name
+  route53_zone_id = var.route53_zone_id
+}
+############################################
+# AUTH MODULE (Cognito)
+############################################
+module "auth" {
+
+  source = "./modules/auth"
+
+  project_name = var.project_name
+
+  cognito_domain_prefix = "${var.project_name}-auth"
+
+  callback_urls = [
+    "http://localhost:3000"
+  ]
+
+  logout_urls = [
+    "http://localhost:3000"
+  ]
+
 }

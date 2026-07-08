@@ -27,3 +27,10 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+variable "domain_name" {
+  type = string
+}
+
+variable "route53_zone_id" {
+  type = string
+}
