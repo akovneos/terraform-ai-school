@@ -1,3 +1,4 @@
+/*
 ############################################
 # AUTH MODULE (Cognito.tf)
 ############################################
@@ -6,16 +7,13 @@ resource "aws_cognito_user_pool" "main" {
 
   name = "${var.project_name}-user-pool"
 
-
   username_attributes = [
     "email"
   ]
 
-
   auto_verified_attributes = [
     "email"
   ]
-
 
   password_policy {
 
@@ -33,7 +31,6 @@ resource "aws_cognito_user_pool" "main" {
 
   }
 
-
   schema {
 
     attribute_data_type = "String"
@@ -45,7 +42,6 @@ resource "aws_cognito_user_pool" "main" {
     mutable = true
 
   }
-
 
   account_recovery_setting {
 
@@ -59,7 +55,6 @@ resource "aws_cognito_user_pool" "main" {
 
   }
 
-
   tags = {
 
     Name = "${var.project_name}-user-pool"
@@ -70,20 +65,13 @@ resource "aws_cognito_user_pool" "main" {
 
 }
 
-
-
 resource "aws_cognito_user_pool_client" "app" {
-
 
   name = "${var.project_name}-client"
 
-
   user_pool_id = aws_cognito_user_pool.main.id
 
-
   generate_secret = false
-
-
 
   explicit_auth_flows = [
 
@@ -93,19 +81,13 @@ resource "aws_cognito_user_pool_client" "app" {
 
   ]
 
-
-
   allowed_oauth_flows_user_pool_client = true
-
-
 
   allowed_oauth_flows = [
 
     "code"
 
   ]
-
-
 
   allowed_oauth_scopes = [
 
@@ -117,22 +99,17 @@ resource "aws_cognito_user_pool_client" "app" {
 
   ]
 
-
-
   supported_identity_providers = [
 
     "COGNITO"
 
   ]
 
-
-
   callback_urls = [
 
     "https://${var.project_name}.example.com"
 
   ]
-
 
   logout_urls = [
 
@@ -142,19 +119,16 @@ resource "aws_cognito_user_pool_client" "app" {
 
 }
 
-
-
 resource "aws_cognito_user_pool_domain" "main" {
 
-
   domain = var.cognito_domain_prefix
-
 
   user_pool_id = aws_cognito_user_pool.main.id
 
 }
+
 ############################################
-# AUTH MODULE (outputs.tf
+# AUTH MODULE (outputs.tf)
 ############################################
 
 output "user_pool_id" {
@@ -165,8 +139,6 @@ output "user_pool_id" {
 
 }
 
-
-
 output "user_pool_arn" {
 
   description = "Cognito User Pool ARN"
@@ -174,9 +146,6 @@ output "user_pool_arn" {
   value = aws_cognito_user_pool.main.arn
 
 }
-
-
-
 
 output "client_id" {
 
@@ -186,9 +155,6 @@ output "client_id" {
 
 }
 
-
-
-
 output "cognito_domain" {
 
   description = "Cognito hosted UI domain"
@@ -196,9 +162,11 @@ output "cognito_domain" {
   value = aws_cognito_user_pool_domain.main.domain
 
 }
+
 ############################################
-# AUTH MODULE variables.tf
+# AUTH MODULE (variables.tf)
 ############################################
+
 variable "project_name" {
   description = "Project name"
   type        = string
@@ -221,6 +189,7 @@ variable "logout_urls" {
     "http://localhost:3000"
   ]
 }
+
 variable "cognito_domain_prefix" {
 
   description = "Cognito hosted UI domain prefix"
@@ -228,3 +197,4 @@ variable "cognito_domain_prefix" {
   type = string
 
 }
+*/
