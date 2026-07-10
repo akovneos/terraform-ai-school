@@ -42,6 +42,6 @@ output "issuer_url" {
 
   description = "Cognito JWT issuer URL"
 
-value = "https://cognito-idp.${data.aws_region.current.region}.amazonaws.com/${aws_cognito_user_pool.main.id}"
+  value = "https://cognito-idp.${data.aws_region.current.region}.amazonaws.com/${aws_cognito_user_pool.main.id}"
 
 }
