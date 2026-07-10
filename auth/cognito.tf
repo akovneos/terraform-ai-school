@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 resource "aws_cognito_user_pool" "main" {
 
   name = "${var.project_name}-user-pool"
@@ -123,18 +125,12 @@ resource "aws_cognito_user_pool_client" "app" {
 
 
 
-  callback_urls = [
-
-    "https://${var.project_name}.example.com"
-
-  ]
+  callback_urls = var.callback_urls
 
 
-  logout_urls = [
+  logout_urls = var.logout_urls
 
-    "https://${var.project_name}.example.com"
-
-  ]
+  prevent_user_existence_errors = "ENABLED"
 
 }
 
