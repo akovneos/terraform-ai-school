@@ -17,3 +17,7 @@ output "api_id" {
 output "invoke_arn" {
   value = aws_lambda_function.api.invoke_arn
 }
+
+output "lambda_security_group_id" {
+  value = try(local.lambda_security_group_ids[0], null)
+}

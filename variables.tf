@@ -27,10 +27,24 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "openai_api_key" {
+  description = "OpenAI API key stored in AWS Secrets Manager"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 variable "domain_name" {
   type = string
 }
 
 variable "route53_zone_id" {
   type = string
+}
+
+variable "aws_region" {
+  description = "AWS region for regional resources"
+  type        = string
+  default     = "ap-northeast-1"
 }
