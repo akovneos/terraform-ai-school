@@ -24,5 +24,6 @@ variable "db_password" {
 }
 
 variable "allowed_security_groups" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }

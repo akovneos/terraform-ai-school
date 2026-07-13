@@ -37,3 +37,11 @@ output "cognito_domain" {
   value = aws_cognito_user_pool_domain.main.domain
 
 }
+
+output "issuer_url" {
+
+  description = "Cognito JWT issuer URL"
+
+  value = "https://cognito-idp.${data.aws_region.current.region}.amazonaws.com/${aws_cognito_user_pool.main.id}"
+
+}

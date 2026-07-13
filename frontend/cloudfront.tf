@@ -11,7 +11,10 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 }
 
 resource "aws_cloudfront_distribution" "frontend" {
-  enabled = true
+  enabled             = true
+  price_class         = var.price_class
+  wait_for_deployment = false
+  web_acl_id          = var.web_acl_id
 
   origin {
     domain_name              = aws_s3_bucket.frontend.bucket_regional_domain_name
@@ -44,7 +47,7 @@ resource "aws_cloudfront_distribution" "frontend" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.frontend.arn
+    acm_certificate_arn = aws_acm_certificate_validation.frontend.certificate_arn
     ssl_support_method  = "sni-only"
   }
 
