@@ -29,3 +29,15 @@ output "openai_secret_arn" {
 output "waf_web_acl_arn" {
   value = module.security.waf_web_acl_arn
 }
+
+output "cloudtrail_bucket_name" {
+  value = module.monitoring.cloudtrail_bucket_name
+}
+
+output "cloudtrail_arn" {
+  value = module.monitoring.cloudtrail_arn
+}
+
+output "config_bucket_name" {
+  value = module.monitoring.config_bucket_name
+}

@@ -48,3 +48,15 @@ variable "aws_region" {
   type        = string
   default     = "ap-northeast-1"
 }
+
+variable "cloudwatch_log_retention_days" {
+  description = "CloudWatch log retention in days"
+  type        = number
+  default     = 30
+}
+
+variable "enable_config_recorder" {
+  description = "Whether to enable AWS Config recorder"
+  type        = bool
+  default     = true
+}

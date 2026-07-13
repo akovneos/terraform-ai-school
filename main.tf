@@ -124,3 +124,15 @@ module "frontend" {
   route53_zone_id = var.route53_zone_id
   web_acl_id      = module.security.waf_web_acl_arn
 }
+
+############################################
+# MONITORING MODULE (CloudWatch + CloudTrail + Config)
+############################################
+
+module "monitoring" {
+  source = "./monitoring"
+
+  project_name                  = var.project_name
+  cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
+  enable_config_recorder        = var.enable_config_recorder
+}
