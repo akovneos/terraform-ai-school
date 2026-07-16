@@ -76,3 +76,9 @@ variable "cognito_audience" {
   type    = list(string)
   default = []
 }
+
+variable "cors_allow_origins" {
+  description = "Origins allowed to call the HTTP API from a browser"
+  type        = list(string)
+  default     = ["http://localhost:3000"]
+}

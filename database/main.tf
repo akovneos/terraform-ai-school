@@ -52,13 +52,14 @@ resource "aws_db_instance" "this" {
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [aws_security_group.db.id]
 
-  multi_az            = true
-  publicly_accessible = false
-  skip_final_snapshot = true
+  multi_az                  = false
+  publicly_accessible       = false
+  skip_final_snapshot       = false
+  final_snapshot_identifier = "${var.project_name}-postgres-final"
 
   backup_retention_period = 7
 
-  deletion_protection = false
+  deletion_protection = true
 
   apply_immediately = true
 }

@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "config" {
   count         = var.enable_config_recorder ? 1 : 0
   bucket        = "${var.project_name}-config-${data.aws_caller_identity.current.account_id}"
-  force_destroy = true
+  force_destroy = false
 
   tags = {
     Project = var.project_name
@@ -27,6 +27,69 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "config" {
       sse_algorithm = "AES256"
     }
   }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "config" {
+  count  = var.enable_config_recorder ? 1 : 0
+  bucket = aws_s3_bucket.config[0].id
+
+  rule {
+    id     = "config-log-retention"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
+
+    transition {
+      days          = var.s3_log_transition_days
+      storage_class = "STANDARD_IA"
+    }
+
+    expiration {
+      days = var.s3_log_expiration_days
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "config" {
+  count  = var.enable_config_recorder ? 1 : 0
+  bucket = aws_s3_bucket.config[0].id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AWSConfigBucketPermissionsCheck"
+        Effect = "Allow"
+        Principal = {
+          Service = "config.amazonaws.com"
+        }
+        Action   = ["s3:GetBucketAcl", "s3:ListBucket"]
+        Resource = aws_s3_bucket.config[0].arn
+        Condition = {
+          StringEquals = {
+            "AWS:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      },
+      {
+        Sid    = "AWSConfigBucketDelivery"
+        Effect = "Allow"
+        Principal = {
+          Service = "config.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.config[0].arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/Config/*"
+        Condition = {
+          StringEquals = {
+            "s3:x-amz-acl"      = "bucket-owner-full-control"
+            "AWS:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role" "config" {
@@ -72,7 +135,8 @@ resource "aws_config_delivery_channel" "main" {
   s3_bucket_name = aws_s3_bucket.config[0].bucket
 
   depends_on = [
-    aws_config_configuration_recorder.main
+    aws_config_configuration_recorder.main,
+    aws_s3_bucket_policy.config
   ]
 }
 
@@ -85,4 +149,3 @@ resource "aws_config_configuration_recorder_status" "main" {
     aws_config_delivery_channel.main
   ]
 }
-

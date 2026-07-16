@@ -41,3 +41,11 @@ output "cloudtrail_arn" {
 output "config_bucket_name" {
   value = module.monitoring.config_bucket_name
 }
+
+output "backup_vault_arn" {
+  value = module.backup.backup_vault_arn
+}
+
+output "backup_plan_id" {
+  value = module.backup.backup_plan_id
+}

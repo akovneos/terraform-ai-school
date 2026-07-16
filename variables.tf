@@ -60,3 +60,63 @@ variable "enable_config_recorder" {
   type        = bool
   default     = true
 }
+
+variable "enable_rds_schedule" {
+  description = "Whether to start and stop RDS on a fixed study schedule"
+  type        = bool
+  default     = true
+}
+
+variable "rds_schedule_timezone" {
+  description = "Timezone used by the RDS start and stop schedules"
+  type        = string
+  default     = "Asia/Tokyo"
+}
+
+variable "rds_start_schedule" {
+  description = "EventBridge Scheduler cron expression for starting RDS"
+  type        = string
+  default     = "cron(30 8 ? * MON-FRI *)"
+}
+
+variable "rds_stop_schedule" {
+  description = "EventBridge Scheduler cron expression for stopping RDS"
+  type        = string
+  default     = "cron(0 19 ? * MON-FRI *)"
+}
+
+variable "s3_log_transition_days" {
+  description = "Days before S3 audit logs move to Standard-IA storage"
+  type        = number
+  default     = 30
+}
+
+variable "s3_log_expiration_days" {
+  description = "Days before S3 audit logs are deleted"
+  type        = number
+  default     = 180
+}
+
+variable "backup_schedule" {
+  description = "AWS Backup cron expression in UTC; the default runs daily at 03:00 JST"
+  type        = string
+  default     = "cron(0 18 ? * * *)"
+}
+
+variable "backup_retention_days" {
+  description = "Number of days to retain AWS Backup recovery points"
+  type        = number
+  default     = 7
+}
+
+variable "backup_start_window_minutes" {
+  description = "Minutes AWS Backup may wait before starting a scheduled job"
+  type        = number
+  default     = 60
+}
+
+variable "backup_completion_window_minutes" {
+  description = "Maximum number of minutes allowed for a backup job"
+  type        = number
+  default     = 180
+}

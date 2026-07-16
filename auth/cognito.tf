@@ -1,4 +1,5 @@
 data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
 
 resource "aws_cognito_user_pool" "main" {
 
@@ -139,7 +140,7 @@ resource "aws_cognito_user_pool_client" "app" {
 resource "aws_cognito_user_pool_domain" "main" {
 
 
-  domain = var.cognito_domain_prefix
+  domain = "${var.cognito_domain_prefix}-${data.aws_caller_identity.current.account_id}"
 
 
   user_pool_id = aws_cognito_user_pool.main.id

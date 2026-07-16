@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "cloudtrail" {
   bucket        = "${var.project_name}-cloudtrail-${data.aws_caller_identity.current.account_id}"
-  force_destroy = true
+  force_destroy = false
 
   tags = {
     Project = var.project_name
@@ -24,6 +24,28 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail" {
+  bucket = aws_s3_bucket.cloudtrail.id
+
+  rule {
+    id     = "cloudtrail-log-retention"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
+
+    transition {
+      days          = var.s3_log_transition_days
+      storage_class = "STANDARD_IA"
+    }
+
+    expiration {
+      days = var.s3_log_expiration_days
     }
   }
 }
@@ -61,9 +83,43 @@ resource "aws_s3_bucket_policy" "cloudtrail" {
   })
 }
 
+resource "aws_iam_role" "cloudtrail" {
+  name = "${var.project_name}-cloudtrail-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "cloudtrail.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "cloudtrail_logs" {
+  name = "${var.project_name}-cloudtrail-logs"
+  role = aws_iam_role.cloudtrail.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ]
+      Resource = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
+    }]
+  })
+}
+
 resource "aws_cloudtrail" "main" {
   name                          = "${var.project_name}-trail"
   s3_bucket_name                = aws_s3_bucket.cloudtrail.id
+  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
+  cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail.arn
   include_global_service_events = true
   is_multi_region_trail         = true
   enable_logging                = true
@@ -74,11 +130,11 @@ resource "aws_cloudtrail" "main" {
   }
 
   depends_on = [
-    aws_s3_bucket_policy.cloudtrail
+    aws_s3_bucket_policy.cloudtrail,
+    aws_iam_role_policy.cloudtrail_logs
   ]
 
   tags = {
     Project = var.project_name
   }
 }
-

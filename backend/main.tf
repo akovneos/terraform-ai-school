@@ -145,24 +145,18 @@ resource "aws_lambda_function" "api" {
 }
 
 # =========================
-# CLOUDWATCH LOG GROUP
-# =========================
-
-resource "aws_cloudwatch_log_group" "lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.api.function_name}"
-  retention_in_days = 30
-
-  tags = {
-    Project = var.project_name
-  }
-}
-
-# =========================
 # API GATEWAY (HTTP API)
 # =========================
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "${var.project_name}-http-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_headers = ["Authorization", "Content-Type"]
+    allow_methods = ["GET", "POST", "OPTIONS"]
+    allow_origins = var.cors_allow_origins
+    max_age       = 300
+  }
 
   tags = {
     Project = var.project_name

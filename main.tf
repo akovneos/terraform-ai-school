@@ -89,6 +89,10 @@ module "backend" {
 
   cognito_issuer_url = module.auth.issuer_url
   cognito_audience   = [module.auth.client_id]
+  cors_allow_origins = [
+    "http://localhost:3000",
+    "https://${var.domain_name}"
+  ]
 }
 
 ############################################
@@ -110,6 +114,11 @@ module "database" {
   allowed_security_groups = compact([
     module.network.lambda_security_group_id
   ])
+
+  enable_rds_schedule   = var.enable_rds_schedule
+  rds_schedule_timezone = var.rds_schedule_timezone
+  rds_start_schedule    = var.rds_start_schedule
+  rds_stop_schedule     = var.rds_stop_schedule
 }
 
 ############################################
@@ -135,4 +144,22 @@ module "monitoring" {
   project_name                  = var.project_name
   cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
   enable_config_recorder        = var.enable_config_recorder
+  lambda_function_name          = module.backend.lambda_function_name
+  s3_log_transition_days        = var.s3_log_transition_days
+  s3_log_expiration_days        = var.s3_log_expiration_days
+}
+
+############################################
+# BACKUP MODULE (AWS Backup for RDS)
+############################################
+
+module "backup" {
+  source = "./backup"
+
+  project_name                     = var.project_name
+  resource_arns                    = [module.database.db_instance_arn]
+  backup_schedule                  = var.backup_schedule
+  backup_retention_days            = var.backup_retention_days
+  backup_start_window_minutes      = var.backup_start_window_minutes
+  backup_completion_window_minutes = var.backup_completion_window_minutes
 }
