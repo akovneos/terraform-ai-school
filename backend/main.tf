@@ -3,7 +3,7 @@
 # =========================
 
 locals {
-  enable_vpc       = var.vpc_id != null && length(var.private_subnet_ids) > 0
+  enable_vpc       = var.enable_vpc_config
   create_lambda_sg = local.enable_vpc && length(var.lambda_security_group_ids) == 0
   lambda_security_group_ids = local.create_lambda_sg ? [
     aws_security_group.lambda[0].id
@@ -12,7 +12,7 @@ locals {
     var.db_password_secret_arn,
     var.openai_secret_arn
   ])
-  enable_secret_access  = length(local.secret_arns) > 0
+  enable_secret_access  = var.enable_secret_access
   enable_jwt_authorizer = var.cognito_issuer_url != "" && length(var.cognito_audience) > 0
 }
 

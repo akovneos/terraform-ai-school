@@ -3,11 +3,13 @@ variable "project_name" {
 }
 
 variable "domain_name" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "route53_zone_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "price_class" {

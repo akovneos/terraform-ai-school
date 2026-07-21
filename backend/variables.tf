@@ -37,6 +37,12 @@ variable "lambda_security_group_ids" {
   default = []
 }
 
+variable "enable_vpc_config" {
+  description = "Whether to attach the Lambda function to VPC subnets"
+  type        = bool
+  default     = false
+}
+
 variable "db_endpoint" {
   type    = string
   default = ""
@@ -65,6 +71,12 @@ variable "db_password_secret_arn" {
 variable "openai_secret_arn" {
   type    = string
   default = ""
+}
+
+variable "enable_secret_access" {
+  description = "Whether to create and attach the Lambda Secrets Manager access policy"
+  type        = bool
+  default     = false
 }
 
 variable "cognito_issuer_url" {

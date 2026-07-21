@@ -36,11 +36,15 @@ variable "openai_api_key" {
 }
 
 variable "domain_name" {
-  type = string
+  description = "Optional custom domain name. Leave empty to use the default CloudFront domain."
+  type        = string
+  default     = ""
 }
 
 variable "route53_zone_id" {
-  type = string
+  description = "Optional Route53 hosted zone ID for the custom domain."
+  type        = string
+  default     = ""
 }
 
 variable "aws_region" {

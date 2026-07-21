@@ -11,5 +11,5 @@ output "cloudfront_id" {
 }
 
 output "website_url" {
-  value = "https://${var.domain_name}"
+  value = local.use_custom_domain ? "https://${var.domain_name}" : "https://${aws_cloudfront_distribution.frontend.domain_name}"
 }

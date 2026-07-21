@@ -34,15 +34,15 @@ module "auth" {
   project_name          = var.project_name
   cognito_domain_prefix = "${var.project_name}-auth"
 
-  callback_urls = [
-    "http://localhost:3000",
-    "https://${var.domain_name}"
-  ]
+  callback_urls = concat(
+    ["http://localhost:3000"],
+    var.domain_name != "" ? ["https://${var.domain_name}"] : []
+  )
 
-  logout_urls = [
-    "http://localhost:3000",
-    "https://${var.domain_name}"
-  ]
+  logout_urls = concat(
+    ["http://localhost:3000"],
+    var.domain_name != "" ? ["https://${var.domain_name}"] : []
+  )
 }
 
 ############################################
@@ -75,6 +75,7 @@ module "backend" {
 
   vpc_id             = module.network.vpc_id
   private_subnet_ids = module.network.private_subnet_ids
+  enable_vpc_config  = true
   lambda_security_group_ids = [
     module.network.lambda_security_group_id
   ]
@@ -86,13 +87,14 @@ module "backend" {
 
   db_password_secret_arn = module.security.db_secret_arn
   openai_secret_arn      = module.security.openai_secret_arn
+  enable_secret_access   = true
 
   cognito_issuer_url = module.auth.issuer_url
   cognito_audience   = [module.auth.client_id]
-  cors_allow_origins = [
-    "http://localhost:3000",
-    "https://${var.domain_name}"
-  ]
+  cors_allow_origins = concat(
+    ["http://localhost:3000"],
+    var.domain_name != "" ? ["https://${var.domain_name}"] : []
+  )
 }
 
 ############################################

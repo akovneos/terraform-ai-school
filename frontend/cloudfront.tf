@@ -1,5 +1,6 @@
 locals {
-  s3_origin_id = "${var.project_name}-s3-origin"
+  s3_origin_id      = "${var.project_name}-s3-origin"
+  use_custom_domain = var.domain_name != "" && var.route53_zone_id != ""
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
@@ -47,11 +48,12 @@ resource "aws_cloudfront_distribution" "frontend" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate_validation.frontend.certificate_arn
-    ssl_support_method  = "sni-only"
+    acm_certificate_arn            = local.use_custom_domain ? aws_acm_certificate_validation.frontend[0].certificate_arn : null
+    cloudfront_default_certificate = local.use_custom_domain ? null : true
+    ssl_support_method             = local.use_custom_domain ? "sni-only" : null
   }
 
-  aliases = [var.domain_name]
+  aliases = local.use_custom_domain ? [var.domain_name] : []
 
   tags = {
     Project = var.project_name
