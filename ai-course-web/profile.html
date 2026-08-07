@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プロフィール | AI業務活用研修</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="portal-ui.css" />
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<body class="portal-body">
+  <header class="app-header">
+    <a class="logo" href="index.html"><span class="logo-mark"><i data-lucide="graduation-cap"></i></span><span>AI業務活用研修</span></a>
+    <nav><a href="index.html">学習ホーム</a><a href="index.html#curriculum">カリキュラム</a><a href="schedule.html">学習計画</a><a href="index.html#records">提出履歴</a></nav>
+    <div class="header-actions"><span class="saved"><i data-lucide="cloud-check"></i> 保存済み</span><a class="profile profile-link" href="profile.html"><i data-lucide="user-round"></i><span class="profile-name">受講生A</span></a></div>
+  </header>
+  <main class="profile-page">
+    <div class="profile-heading"><a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> 学習ホームへ戻る</a><p class="kicker">MY PROFILE</p><h1>プロフィール</h1></div>
+    <section class="profile-overview">
+      <div class="profile-avatar" id="avatar-initials">A</div>
+      <div><h2 class="profile-name">受講生A</h2><p id="profile-role">受講者</p><span class="enrollment"><i data-lucide="badge-check"></i> AI業務活用研修を受講中</span></div>
+    </section>
+    <section class="profile-stats">
+      <div><span>学習進捗</span><strong id="profile-progress">0%</strong></div><div><span>完了モジュール</span><strong id="profile-modules">0 / 10</strong></div><div><span>提出済み課題</span><strong id="profile-submissions">0 件</strong></div>
+    </section>
+    <section class="profile-grid">
+      <article class="profile-card"><div class="card-heading"><div><p class="kicker">ACCOUNT</p><h2>基本情報</h2></div><i data-lucide="contact-round"></i></div><label for="name-input">表示名</label><input id="name-input" maxlength="24" /><label for="role-input">所属・役割</label><input id="role-input" maxlength="40" /><label for="email-input">メールアドレス</label><input id="email-input" value="student@ai-kenshu.jp" disabled /><button class="button primary" id="save-profile"><i data-lucide="save"></i> 変更を保存</button><p class="save-message" id="profile-save-message" aria-live="polite"></p></article>
+      <article class="profile-card"><div class="card-heading"><div><p class="kicker">LEARNING</p><h2>学習状況</h2></div><i data-lucide="book-open-check"></i></div><div class="learning-line"><span>現在の課題</span><strong>ログ分析・エラー調査</strong></div><div class="learning-line"><span>受講ペース</span><strong>6時間 / 日</strong></div><div class="learning-line"><span>コース期間</span><strong>6週間 / 180時間</strong></div><a class="button outline" href="schedule.html"><i data-lucide="calendar-days"></i> 学習計画を見る</a></article>
+      <article class="profile-card settings-card"><div class="card-heading"><div><p class="kicker">PREFERENCES</p><h2>学習設定</h2></div><i data-lucide="settings"></i></div><label class="toggle-row"><span><strong>学習リマインダー</strong><small>学習開始時に通知を表示します。</small></span><input type="checkbox" id="reminder-toggle" /><i class="toggle"></i></label><label class="toggle-row"><span><strong>保存状態の表示</strong><small>入力内容の保存状況を表示します。</small></span><input type="checkbox" id="save-status-toggle" checked /><i class="toggle"></i></label></article>
+    </section>
+  </main>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="progress-sync.js"></script>
+<script src="profile.js"></script>
+  <script src="japanese-interface.js"></script>
+</body>
+</html>
