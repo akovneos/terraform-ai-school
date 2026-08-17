@@ -1,0 +1,30 @@
+.m8-columns {
+  align-items: stretch;
+}
+
+.m8-columns section {
+  min-height: 205px;
+  box-sizing: border-box;
+}
+
+/* Avoid inheriting the global checkbox-row layout from styles.css. */
+.m8-columns .check {
+  display: block;
+  margin: 0;
+}
+
+@media (max-width: 850px) {
+  .m8-columns section { min-height: 0; }
+}
+
+/* Keep report actions readable when an AI review card is shown above them. */
+.m1-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.m1-actions > button,
+.m1-actions > label {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}

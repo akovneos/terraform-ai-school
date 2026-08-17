@@ -1,0 +1,15 @@
+.day-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.day-link:hover {
+  background: #f2f7ff;
+}
+
+.day-link svg {
+  width: 16px;
+  height: 16px;
+  color: #1268d8;
+  flex: 0 0 auto;
+}

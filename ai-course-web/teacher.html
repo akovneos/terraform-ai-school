@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>講師画面 | AI業務活用研修</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="teacher.css" />
+  <link rel="stylesheet" href="teacher-progress.css" />
+</head>
+<body>
+  <header class="app-header">
+    <a class="logo" href="index.html"><span class="logo-mark"><i data-lucide="graduation-cap"></i></span><span>AI業務活用研修</span></a>
+    <div class="teacher-header-title"><span>講師画面</span><small>評価・フィードバック</small></div>
+    <div class="header-actions"><a class="teacher-home-link" href="index.html"><i data-lucide="house"></i> 学習ホーム</a></div>
+  </header>
+  <main class="teacher-page">
+    <p class="kicker">講師確認</p>
+    <h1>提出物の確認</h1>
+    <p class="teacher-lead">AIの事前評価は補助情報です。最終的な合否とフィードバックは講師が判断します。</p>
+    <section id="teacher-learning-dashboard"></section>
+    <section class="teacher-ai-evaluation" id="teacher-ai-evaluation-panel"></section>
+    <section class="teacher-summary" id="teacher-summary"></section>
+    <section class="teacher-layout">
+      <aside class="teacher-list-panel"><div class="teacher-list-head"><h2>確認待ち</h2><button type="button" id="refresh-list" aria-label="一覧を更新"><i data-lucide="refresh-cw"></i></button></div><div id="submission-list" class="submission-list"></div></aside>
+      <section class="teacher-review-panel" id="teacher-review-panel"></section>
+    </section>
+  </main>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="progress-sync.js"></script>
+<script src="course-plan.js"></script>
+  <script src="teacher.js"></script>
+  <script src="teacher-progress.js"></script>
+  <script src="teacher-evaluation.js"></script>
+  <script src="japanese-interface.js"></script>
+</body>
+</html>

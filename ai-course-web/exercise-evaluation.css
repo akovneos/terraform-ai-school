@@ -1,0 +1,16 @@
+.exercise-evaluation { margin-top: 16px; border: 1px solid #bfd1ee; border-left: 4px solid #1468d4; padding: 16px; border-radius: 6px; background: #fff; }
+.exercise-evaluation h3 { margin: 0 0 6px; font-size: 17px; }
+.exercise-evaluation p { margin: 6px 0; color: #425a78; line-height: 1.65; }
+.exercise-evaluation ul { margin: 10px 0; padding-left: 20px; color: #253c5b; }
+.exercise-evaluation__actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.exercise-evaluation__check { background: #0868d7; color: #fff; border: 0; border-radius: 4px; min-height: 42px; padding: 0 16px; font: inherit; font-weight: 700; cursor: pointer; }
+.exercise-evaluation__check:disabled { cursor: not-allowed; opacity: .55; }
+.exercise-evaluation__status { font-weight: 700; }
+.exercise-evaluation__status[data-status="passed"] { color: #07834d; }
+.exercise-evaluation__status[data-status="needs_revision"], .exercise-evaluation__status[data-status="outdated"], .exercise-evaluation__status[data-status="error"] { color: #b54708; }
+.exercise-evaluation__feedback { margin-top: 12px; padding: 12px; background: #f4f8fe; border-radius: 4px; }
+.exercise-evaluation__feedback strong { display: block; margin-top: 8px; color: #102a4b; }
+.exercise-evaluation__feedback li { margin: 4px 0; }
+.exercise-evaluation [data-evaluation-complete]:disabled { opacity: .55; cursor: not-allowed; }
+.exercise-evaluation__mock { color: #9a6700; font-weight: 700; }
+@media (max-width: 640px) { .exercise-evaluation { padding: 13px; } .exercise-evaluation__actions { display: grid; } .exercise-evaluation__check { width: 100%; } }
