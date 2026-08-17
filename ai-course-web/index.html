@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI業務活用研修</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="portal-ui.css" />
+  <link rel="stylesheet" href="course-links.css" />
+  <link rel="stylesheet" href="difficulty.css" />
+</head>
+<body class="portal-body">
+  <header class="app-header">
+    <a class="logo" href="index.html"><span class="logo-mark"><i data-lucide="graduation-cap"></i></span><span>AI業務活用研修</span></a>
+    <nav><a class="nav-active" href="index.html">学習ホーム</a><a href="#curriculum">カリキュラム</a><a href="schedule.html">学習計画</a><a href="levels.html">学習レベル</a><a id="submissions-link" href="#records">提出履歴</a></nav>
+    <div class="header-actions"><span class="saved"><i data-lucide="cloud-check"></i> 保存済み</span><button class="help-button" aria-label="ヘルプ"><i data-lucide="circle-help"></i></button><div class="profile-wrap"><button class="profile" id="profile-button" aria-expanded="false" aria-controls="profile-menu"><i data-lucide="user-round"></i><span class="profile-name">受講生A</span><i data-lucide="chevron-down"></i></button><div class="profile-menu" id="profile-menu" hidden><strong class="profile-name">受講生A</strong><span>AI業務活用研修</span><hr /><a href="profile.html"><i data-lucide="contact-round"></i> プロフィール</a><a href="levels.html"><i data-lucide="settings"></i> 学習レベル</a></div></div></div>
+  </header>
+
+  <main class="portal-main">
+    <section class="welcome">
+      <div class="welcome-copy"><p class="kicker">6 WEEKS / 180 HOURS</p><h1>生成AIを、仕事で使える力に。</h1><p>6週間、30日間の実践プログラムです。理解する。質問する。自分で検証する。この3つを繰り返して、実務でのAI活用を身につけます。</p><a class="button primary" data-course-start href="task.html?module=1"><i data-lucide="play"></i><span>学習を開始する</span></a></div>
+      <div class="welcome-image" role="img" aria-label="AI学習環境"></div>
+    </section>
+
+    <section class="stats" aria-label="学習状況">
+      <div><span>学習進捗</span><strong id="course-progress">0%</strong><div class="thin-progress"><span id="course-bar"></span></div></div>
+      <div><span>完了モジュール</span><strong id="completed-count">0 <small>/ 10</small></strong></div>
+      <div><span>提出済み課題</span><strong id="submission-count">0 <small>件</small></strong></div>
+      <div><span>コース期間</span><strong class="next-label">6週間 / 180時間</strong></div>
+    </section>
+
+    <section class="focus-section">
+      <div class="section-title"><div><p class="kicker">CURRENT ASSIGNMENT</p><h2>今日の課題</h2></div><a id="task-list-link" href="task.html?module=1">課題一覧 <i data-lucide="arrow-right"></i></a></div>
+      <article class="focus-task">
+        <div class="task-number" id="current-module-number">01</div>
+        <div class="task-content"><span class="tag">実践課題</span><h3 id="current-module-title">生成AIの基礎</h3><p id="current-module-summary">AI・機械学習・生成AIの違いを理解し、業務での活用可否を判断します。</p><div class="task-meta"><span><i data-lucide="clock-3"></i> <span id="current-module-duration">Day 1 - 3</span></span><span><i data-lucide="file-text"></i> 提出あり</span></div></div>
+        <a class="button primary" data-course-start href="task.html?module=1"><span>開始する</span> <i data-lucide="arrow-right"></i></a>
+      </article>
+    </section>
+
+    <section id="curriculum" class="curriculum-section">
+      <div class="section-title"><div><p class="kicker">CURRICULUM</p><h2>カリキュラム</h2></div><span class="section-note">全10モジュール</span></div>
+      <div class="module-grid" id="module-grid"></div>
+    </section>
+
+    <section class="difficulty-overview" aria-labelledby="difficulty-title">
+      <p class="kicker">DIFFICULTY DESIGN</p>
+      <h2 id="difficulty-title">難易度について</h2>
+      <p>本研修では、未経験者と現役エンジニアが同じテーマと共通必須課題に取り組みます。</p>
+      <p>未経験者には選択肢、テンプレート、ヒント、用語説明を表示します。現役エンジニアには技術的根拠、影響範囲、副作用、リスク、再現可能な検証手順、改善提案など、より深い回答が求められます。</p>
+      <p>課題の違いではなく、判断と検証の深さによって難易度を調整します。</p>
+    </section>
+
+    <section id="records" class="record-section">
+      <div class="section-title"><div><p class="kicker">SUBMISSIONS</p><h2>提出履歴</h2></div></div>
+      <div class="empty-state" id="submission-history"><i data-lucide="inbox"></i><p>まだ提出された課題はありません。</p></div>
+    </section>
+  </main>
+  <dialog class="app-dialog" id="submission-dialog"><button class="dialog-x" id="close-submissions" aria-label="閉じる"><i data-lucide="x"></i></button><p class="kicker">SUBMISSIONS</p><h2>提出履歴</h2><div id="dialog-submission-list"></div></dialog>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="progress-sync.js"></script>
+<script src="course-data.js"></script>
+  <script src="course-plan.js"></script>
+  <script src="portal.js?v=3"></script>
+  <script src="japanese-interface.js"></script>
+</body>
+</html>

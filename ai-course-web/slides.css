@@ -1,0 +1,21 @@
+/* Desktop: one exercise step per screen. */
+.slide-navigation { max-width: 920px; margin: 0 auto 16px; display: flex; justify-content: space-between; align-items: center; }
+.slide-navigation .button { min-height: 38px; font-size: 12px; }
+.slide-navigation .button:disabled { opacity: .38; cursor: not-allowed; }
+.slide-navigation span { font: 600 12px "Space Grotesk", sans-serif; color: var(--muted); letter-spacing: .5px; }
+.step-board { display: block; max-width: 920px; }
+.step-card { display: none; min-height: 650px; padding: 31px 34px; }
+.step-card.active { display: flex; }
+.step-card .stepper { max-width: 460px; }
+.step-card .log-box { font-size: 11px; }
+.step-card textarea { min-height: 118px; }
+.step-card[data-step="3"] textarea { min-height: 88px; }
+.steps-mobile { display: none; }
+
+@media (max-width: 700px) {
+  .slide-navigation { margin: 0 0 12px; }
+  .slide-navigation .button { padding: 0 10px; }
+  .slide-navigation #next-slide-top { display: none; }
+  .step-card { padding: 20px 15px; min-height: 0; }
+  .steps-mobile { display: flex; }
+}

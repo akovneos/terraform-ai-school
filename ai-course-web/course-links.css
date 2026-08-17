@@ -1,0 +1,3 @@
+.module-item { color: inherit; text-decoration: none; }
+.module-item:hover { border-color: #9fc4ee; background: #f8fbff; }
+.module-item span small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 500; }

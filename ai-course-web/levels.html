@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>学習レベル | AI業務活用研修</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="levels.css" />
+</head>
+<body class="portal-body">
+  <header class="app-header">
+    <a class="logo" href="index.html"><span class="logo-mark"><i data-lucide="graduation-cap"></i></span><span>AI業務活用研修</span></a>
+    <nav><a href="index.html">学習ホーム</a><a href="index.html#curriculum">カリキュラム</a><a href="schedule.html">学習計画</a><a class="nav-active" href="levels.html">学習レベル</a><a href="index.html#records">提出履歴</a></nav>
+    <div class="header-actions"><span class="saved"><i data-lucide="cloud-check"></i> 保存済み</span><a class="profile profile-link" href="profile.html"><i data-lucide="user-round"></i><span class="profile-name">受講生A</span></a></div>
+  </header>
+  <main class="levels-page">
+    <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> 学習ホームへ戻る</a>
+    <p class="kicker">LEARNING LEVEL</p>
+    <h1>モジュールごとの学習レベル</h1>
+    <p class="levels-lead">全受講者が同じテーマに取り組みます。選択したレベルにより、ヒントの量と提出時に求める説明の深さが変わります。</p>
+    <section class="levels-guide"><div><i data-lucide="circle-help"></i><p><strong>未経験者</strong><span>ヒントとテンプレートを使い、基本的な確認を行います。</span></p></div><div><i data-lucide="book-open-check"></i><p><strong>IT基礎経験者</strong><span>技術的な根拠と影響を短く整理します。</span></p></div><div><i data-lucide="badge-check"></i><p><strong>現役エンジニア</strong><span>根拠、影響範囲、検証手順、改善案まで記録します。</span></p></div></section>
+    <p id="levels-status" class="levels-status" aria-live="polite"></p>
+    <section id="levels-grid" class="levels-grid"></section>
+  </main>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="progress-sync.js"></script>
+<script src="course-plan.js"></script>
+  <script src="levels.js"></script>
+  <script src="japanese-interface.js"></script>
+</body>
+</html>
